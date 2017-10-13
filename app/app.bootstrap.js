@@ -15,7 +15,7 @@ function initialize () {
     app.directive('appComponent', function () {
       return {
         restrict: 'E',
-        template: `<div><button ng-click="vm.trigger()">ololo</button></div>`,
+        template: `<div><button ng-click="vm.activate()">ololo</button></div>`,
         controller: 'AppController',
         controllerAs: 'vm'
       }
@@ -28,8 +28,21 @@ function initialize () {
 }
 
 /* @ngInject */
-function AppController (eventsService) {
+function AppController (eventsService, $interval) {
   var vm = this;
 
-  vm.trigger = eventsService.trigger;
+  vm.activate = activate;
+
+  function activate () {
+    eventsService.on('test')
+      .subscribe(function () {
+        console.log('Works!!!');
+      });
+
+    $interval(testTrigger, 1000);
+  }
+
+  function testTrigger () {
+    eventsService.trigger('test')
+  }
 }

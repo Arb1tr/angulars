@@ -17,8 +17,21 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'babel-loader!ts-loader',
+        exclude: /node_modules/,
+      }, {
+        test: /\.ts$/,
+        enforce: 'pre',
+        loader: 'tslint-loader',
+        options: {}
       }
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.js']
   }
 };
 
